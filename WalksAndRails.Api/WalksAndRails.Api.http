@@ -1,0 +1,6 @@
+@WalksAndRails.Api_HostAddress = http://localhost:5210
+
+GET {{WalksAndRails.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
