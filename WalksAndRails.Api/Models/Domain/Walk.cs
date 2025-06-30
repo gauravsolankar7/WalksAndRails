@@ -8,11 +8,9 @@
         public double LengthInKm { get; set; }
         public string? WalkImageUrl { get; set; }
         public Guid DifficultyId { get; set; }
-
         //Navigation Property
         public required Difficulty Difficulty { get; set; }
         public Guid RegionId { get; set; }
-
         //Navigation Property
         public required Region Region { get; set; }
     }

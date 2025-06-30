@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WalksAndRails.Api.Models.Domain
+﻿namespace WalksAndRails.Api.Models.Domain
 {
     public class Difficulty
     {
         public Guid  Id { get; set; }
-        
         public required string Name { get; set; }
     }
 }

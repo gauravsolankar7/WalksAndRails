@@ -32,7 +32,6 @@ namespace WalksAndRails.Api.Controllers
                     RegionImageUrl = region.RegionImageUrl
                 });
             }
-
             return Ok(regionsDto);
         }
 
@@ -40,14 +39,13 @@ namespace WalksAndRails.Api.Controllers
         [Route("{id:Guid}")]
         public IActionResult GetRegionById([FromRoute] Guid id)
         {
-            //var region = dbContext.Regions.Find(id);
             var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
 
             if (region == null)
             {
                 return NotFound();
             }
-             
+
             var regionDto = new RegionDto()
             {
                 Id = region.Id,
@@ -78,9 +76,7 @@ namespace WalksAndRails.Api.Controllers
                 Name = regionModel.Name,
                 RegionImageUrl = regionModel.RegionImageUrl
             };
-
-            return CreatedAtAction(nameof(GetRegionById), new {id = regionModel.Id}, regionModel);
-
+            return CreatedAtAction(nameof(GetRegionById), new { id = regionModel.Id }, regionModel);
         }
 
         [HttpPut]
@@ -89,7 +85,7 @@ namespace WalksAndRails.Api.Controllers
         {
             var regionModel = dbContext.Regions.FirstOrDefault(x => x.Id == id);
 
-            if(regionModel == null)
+            if (regionModel == null)
             {
                 return NotFound();
             }
@@ -129,7 +125,6 @@ namespace WalksAndRails.Api.Controllers
                 Name = regionModel.Name,
                 RegionImageUrl = regionModel.RegionImageUrl
             };
-
             return Ok(regionDto);
         }
     }

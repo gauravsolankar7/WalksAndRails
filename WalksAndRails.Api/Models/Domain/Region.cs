@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WalksAndRails.Api.Models.Domain
+﻿namespace WalksAndRails.Api.Models.Domain
 {
     public class Region
     {
