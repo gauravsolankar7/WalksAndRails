@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using WalksAndRails.Api.CustomActionFilters;
 using WalksAndRails.Api.Models.Domain;
 using WalksAndRails.Api.Models.DTOs;
 using WalksAndRails.Api.Repositories;
@@ -19,12 +20,15 @@ namespace WalksAndRails.Api.Controllers
             this.walkRepository = walkRepository;
         }
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> CreateWalk([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
+            //Map the DTO to the domain model
             var walkModel = mapper.Map<Walk>(addWalkRequestDto);
-            
+
             await walkRepository.CreateWalkAsync(walkModel);
 
+            // Map the domain model back to the DTO
             return Ok(mapper.Map<WalkDto>(walkModel));
         }
 
@@ -52,17 +56,19 @@ namespace WalksAndRails.Api.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateWalK([FromRoute] Guid id, [FromBody] UpdateWalkRequestDto updateWalkRequestDto)
         {
+            // Map the DTO to the domain model
             var walkModel = mapper.Map<Walk>(updateWalkRequestDto);
-
+            
             walkModel = await walkRepository.UpdateWalkAsync(id, walkModel);
-
+            
             if (walkModel == null)
             {
                 return NotFound();
             }
-
+            // Map the updated domain model back to the DTO
             return Ok(mapper.Map<WalkDto>(walkModel));
         }
 
