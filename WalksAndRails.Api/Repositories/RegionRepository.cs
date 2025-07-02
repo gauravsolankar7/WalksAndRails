@@ -4,11 +4,11 @@ using WalksAndRails.Api.Models.Domain;
 
 namespace WalksAndRails.Api.Repositories
 {
-    public class SQLRegionRepository : IRegionRepository
+    public class RegionRepository : IRegionRepository
     {
         private readonly AppDbContext dbContext;
 
-        public SQLRegionRepository(AppDbContext dbContext)
+        public RegionRepository(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
