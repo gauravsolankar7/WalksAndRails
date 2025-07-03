@@ -32,11 +32,14 @@ namespace WalksAndRails.Api.Controllers
             return Ok(mapper.Map<WalkDto>(walkModel));
         }
 
+        //GET Walks
+        //GET : api/walks?filterOn=Name&filterQuery=Track
         [HttpGet]
-        public async Task<IActionResult> GetAllWalks()
+        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, string? filterQuery)
         {
-            var walksModel = await walkRepository.GetAllWalksAsync();
+            var walksModel = await walkRepository.GetAllWalksAsync(filterOn, filterQuery);
 
+            //Map the domain model to DTO
             return Ok(mapper.Map<List<WalkDto>>(walksModel));
         }
 
