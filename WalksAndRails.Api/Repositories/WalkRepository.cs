@@ -32,8 +32,10 @@ namespace WalksAndRails.Api.Repositories
             return existingWalk;
         }
 
-        public async Task<List<Walk>> GetAllWalksAsync(string? filterOn = null, string? filterQuery = null,
-            string? sortBy = null, bool isAscending = true)
+        public async Task<List<Walk>> GetAllWalksAsync(
+            string? filterOn = null, string? filterQuery = null,
+            string? sortBy = null, bool isAscending = true,
+            int pageNumber = 1, int pageSize = 1000)
         {
             var walks = dbContext.Walks.Include("Difficulty").Include("Region").AsQueryable();
 
@@ -45,6 +47,7 @@ namespace WalksAndRails.Api.Repositories
                     walks = walks.Where(x => x.Name.Contains(filterQuery));
                 }
             }
+
             //Sorting logic
             if(string.IsNullOrWhiteSpace(sortBy) == false)
             {
@@ -59,7 +62,11 @@ namespace WalksAndRails.Api.Repositories
                         : walks.OrderByDescending(x => x.LengthInKm);
                 }
             }
-            return await walks.ToListAsync();
+
+            //Pagination logic
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Walk?> GetWalkByIdAsync(Guid id)
