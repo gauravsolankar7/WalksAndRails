@@ -33,11 +33,12 @@ namespace WalksAndRails.Api.Controllers
         }
 
         //GET Walks
-        //GET : api/walks?filterOn=Name&filterQuery=Track
+        //GET : api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=true
         [HttpGet]
-        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, string? filterQuery)
+        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, string? filterQuery,
+            [FromQuery] string? sortBy, [FromQuery] bool? isAscending)
         {
-            var walksModel = await walkRepository.GetAllWalksAsync(filterOn, filterQuery);
+            var walksModel = await walkRepository.GetAllWalksAsync(filterOn, filterQuery, sortBy, isAscending ?? true);
 
             //Map the domain model to DTO
             return Ok(mapper.Map<List<WalkDto>>(walksModel));
