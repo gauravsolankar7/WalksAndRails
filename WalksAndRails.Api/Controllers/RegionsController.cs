@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalksAndRails.Api.CustomActionFilters;
 using WalksAndRails.Api.Models.Domain;
@@ -21,6 +22,7 @@ namespace WalksAndRails.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllRegions()
         {
             var regions = await regionRepository.GetAllRegionsAsync();
@@ -43,6 +45,7 @@ namespace WalksAndRails.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetRegionById([FromRoute] Guid id)
         {
             var region = await regionRepository.GetRegionByIdAsync(id);
@@ -64,6 +67,7 @@ namespace WalksAndRails.Api.Controllers
 
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             //Map the DTO to the domain model
@@ -81,6 +85,7 @@ namespace WalksAndRails.Api.Controllers
         [HttpPut]
         [Route("{id:guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             //Map the DTO to the domain model
@@ -100,6 +105,7 @@ namespace WalksAndRails.Api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
             var regionModel = await regionRepository.DeleteRegionAsync(id);
