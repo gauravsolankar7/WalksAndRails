@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using WalksAndRails.Api.CustomActionFilters;
 using WalksAndRails.Api.Models.Domain;
 using WalksAndRails.Api.Models.DTOs;
@@ -14,31 +15,33 @@ namespace WalksAndRails.Api.Controllers
     {
         private readonly IRegionRepository  regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(IRegionRepository regionRepository, 
+            IMapper mapper,
+            ILogger<RegionsController> logger)
         {
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
+        // GET ALL Regions
+        // GET: https://localhost:1234/api/Regions 
+
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllRegions()
         {
+            logger.LogInformation("GetAllRegions action method called");
+
+            logger.LogWarning("This is a warning log");
+
+            // Get data from database - Domain model
             var regions = await regionRepository.GetAllRegionsAsync();
 
-            //var regionsDto = new List<RegionDto>();
-            //foreach (var region in regions)
-            //{
-            //    regionsDto.Add(new RegionDto()
-            //    {
-            //        Id = region.Id,
-            //        Code = region.Code,
-            //        Name = region.Name,
-            //        RegionImageUrl = region.RegionImageUrl
-            //    });
-            //}
-            //var regionsDto = ;
+            // Return Dto
+            logger.LogInformation($"Finished get all regions with data: {JsonSerializer.Serialize(regions)}");
 
             return Ok(mapper.Map<List<RegionDto>>(regions));
         }
