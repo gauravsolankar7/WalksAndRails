@@ -22,7 +22,7 @@ namespace WalksAndRails.Api.Controllers
         }
         [HttpPost]
         [ValidateModel]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateWalk([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
             //Map the DTO to the domain model
@@ -38,7 +38,7 @@ namespace WalksAndRails.Api.Controllers
         //GET : api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=true&
         //pageNumber=1&pageSize=10
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllWalks(
             [FromQuery] string? filterOn, string? filterQuery,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending, 
@@ -53,7 +53,7 @@ namespace WalksAndRails.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetWalkById([FromRoute] Guid id)
         {
             var walkModel = await walkRepository.GetWalkByIdAsync(id);
@@ -69,7 +69,7 @@ namespace WalksAndRails.Api.Controllers
         [HttpPut]
         [Route("{id:guid}")]
         [ValidateModel]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateWalK([FromRoute] Guid id, [FromBody] UpdateWalkRequestDto updateWalkRequestDto)
         {
             // Map the DTO to the domain model
@@ -87,7 +87,7 @@ namespace WalksAndRails.Api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteWalk([FromRoute] Guid id)
         {
             var walkModel = await walkRepository.DeleteWalkAsync(id);
