@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WalksAndRails.Api.Models.Domain;
 using WalksAndRails.Api.Models.DTOs;
 using WalksAndRails.Api.Repositories;
@@ -19,6 +20,7 @@ namespace WalksAndRails.Api.Controllers
         //POST: api/Images/Upload
         [HttpPost]
         [Route("Upload")]
+        [Authorize(Roles="Writer")]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto request)
         {
             ValidateFileUpload(request);
